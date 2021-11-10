@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
 import mock from "../constant/mock";
 import Cross from "../public/icons/cross.svg";
+import cartRecoil from "../store/cart";
 
-const ButtonAddFood = ({
+const ButtonAddMovie = ({
   isAdded,
   quantity,
   value,
   onClickAdd,
   onClickUnAdd,
 }) => {
-  const [colors, setColors] = useState("bg-RedVermilionBird");
-  useEffect(() => {
-    if (isAdded) {
-      setColors("bg-SoftPink");
-    } else {
-      setColors("bg-RedVermilionBird");
-    }
-  }, [isAdded]);
+  const [cart, SetCart] = useRecoilState(cartRecoil);
 
   return (
-    <div
-      className={`flex flex-row justify-center items-center rounded-timer cursor-pointer ${colors} min-w-88 w-w88 h-w38 my-w10 leading-A18 tracking-A8`}
+    <button
+      className={`flex flex-row justify-center items-center rounded-timer cursor-pointer ${
+        isAdded
+          ? "bg-SoftPink"
+          : value.price <= 0
+          ? "cursor-not-allowed bg-gray-400"
+          : "bg-RedVermilionBird"
+      } min-w-88 w-w88 h-w38 my-w10 leading-A18 tracking-A8 `}
       onClick={isAdded ? onClickUnAdd : onClickAdd}
+      disabled={value.price <= 0 ? true : false}
     >
       <div
         className={`text-${
@@ -33,11 +35,11 @@ const ButtonAddFood = ({
             <Cross className="mr-1" /> Added {quantity}
           </span>
         ) : (
-          `Add ${value.price}`
+          `Add `
         )}
       </div>
-    </div>
+    </button>
   );
 };
 
-export default ButtonAddFood;
+export default ButtonAddMovie;

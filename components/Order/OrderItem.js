@@ -1,3 +1,5 @@
+import truncate from "lodash/truncate";
+
 const OrderItem = ({ value }) => {
   return (
     <div className="mt-5" key={value.id}>
@@ -8,9 +10,15 @@ const OrderItem = ({ value }) => {
           </div>
           <div className="flex flex-col  ml-2">
             <div className="text-normal font-medium text-BlackTortoise">
-              {value.name}
+              {value.title}
             </div>
-            <div className="text-about text-DeepGrey">{value.description}</div>
+            <div className="text-about text-DeepGrey">
+              {" "}
+              {truncate(value.overview, {
+                length: 50,
+                separator: " ",
+              })}
+            </div>
           </div>
         </div>
         <div className="text-normal">

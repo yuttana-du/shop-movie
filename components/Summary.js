@@ -1,8 +1,12 @@
-import Timer from "./Timer";
+import { useEffect, useState } from "react";
+
 import ButtonCheckOut from "./ButtonCheckOut";
 import UnderLine from "../public/icons/underline.svg";
 
-const Summary = ({ value, minute, second }) => {
+const Summary = ({ value }) => {
+  console.log("value", value);
+  const [discount, setDiscount] = useState(0);
+  const [total, setTotal] = useState(0);
   let sumOrder = 0;
   (() => {
     value.map((valueMap) => {
@@ -11,6 +15,19 @@ const Summary = ({ value, minute, second }) => {
       return valueMap;
     });
   })();
+
+  useEffect(() => {
+    const totalQuantity = value.reduce((acc, cur) => acc + cur.quantity, 0);
+
+    const discountValue =
+      totalQuantity > 6
+        ? sumOrder * 0.2
+        : totalQuantity > 3
+        ? sumOrder * 0.1
+        : 0;
+    setTotal(totalQuantity);
+    setDiscount(discountValue);
+  }, []);
   return (
     <div className="flex flex-col">
       <div className="flex flex-row justify-between items-end mb-5">
@@ -20,7 +37,6 @@ const Summary = ({ value, minute, second }) => {
           </h5>
           <UnderLine className="mt-1" />
         </div>
-        <Timer minute={minute} second={second} />
       </div>
       <div className="flex flex-row justify-center items-center rounded-timer bg-Container h-12 mb-5">
         <div className="bg-take-out-icon h-w22 w-w22 mr-2"></div>
@@ -35,18 +51,14 @@ const Summary = ({ value, minute, second }) => {
         </div>
         <hr className="my-w10" />
         <div className="flex flex-row justify-between items-center ">
-          <div>Delivery Fee</div>
-          <div>$1.99</div>
+          <div>Discount {total > 6 ? "20%" : total > 3 ? "10%" : "0%"}</div>
+          <div>${discount}</div>
         </div>
-        <hr className="my-w10" />
-        <div className="flex flex-row justify-between items-center ">
-          <div>Taxes</div>
-          <div>$1.48</div>
-        </div>
+
         <hr className="my-w10" />
         <div className="flex flex-row justify-between items-center text-font18 text-BlackTortoise font-semibold   mt-5 ">
           <div>Total</div>
-          <div>${(sumOrder + 1.99 + 1.48).toFixed(2)}</div>
+          <div>${(sumOrder - discount).toFixed(2)}</div>
         </div>
         <ButtonCheckOut />
       </div>

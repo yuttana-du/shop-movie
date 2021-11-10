@@ -6,39 +6,12 @@ import { useRecoilValue } from "recoil";
 import Order from "../components/Order/Order";
 import Summary from "../components/Summary";
 import cartRecoil from "../store/cart";
-import timeRecoil from "../store/time";
 
 import Arrow from "../public/icons/leftarrow.svg";
 import Add from "../public/icons/add.svg";
 
 const CheckOut = () => {
-  const [time, setTime] = useRecoilState(timeRecoil);
-  const [minute, setMinute] = useState("5");
-  const [second, setSecond] = useState("00");
   const [cart] = useRecoilState(cartRecoil);
-
-  useEffect(() => {
-    if (time < 1) {
-      console.log("left to order");
-    }
-    setMinute(Math.floor(time / 60));
-    if (time % 60 < 10) {
-      setSecond("0" + (time % 60));
-    } else {
-      setSecond(time % 60);
-    }
-
-    const timer = setTimeout(() => {
-      setTime(time - 1);
-    }, 1000);
-
-    if (time < 1) {
-      clearTimeout(timer);
-    }
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [time]);
 
   const handleClickIndex = () => {
     Router.push({ pathname: "/" });
@@ -71,7 +44,7 @@ const CheckOut = () => {
         </div>
         <div>
           <Order value={cart} />
-          <Summary value={cart} minute={minute} second={second} />
+          <Summary cart={cart} />
         </div>
       </div>
     </div>
