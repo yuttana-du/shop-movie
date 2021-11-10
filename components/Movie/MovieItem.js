@@ -6,19 +6,27 @@ import movieRecoil from "../../store/movie";
 import truncate from "lodash/truncate";
 import Quantity from "../Quantity";
 import ButtonAddMovie from "../ButtonAddMovie";
+import cartRecoil from "../../store/cart";
+
 
 const MovieItem = ({
   value,
   onAddCart,
   onHandlerCartQuantity,
   onDropCart,
-  cart,
 }) => {
   const [movie, setMovie] = useRecoilState(movieRecoil);
   const [quantity, setQuantity] = useState(1);
   const [isAdded, setIsAdded] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [price, setPrice] = useState("");
+  const [cart, setCart] = useRecoilState(cartRecoil);
+  useEffect(() => {
+
+    if(!cart.length) {
+      setIsAdded(false)
+    }
+  }, [cart])
 
   useEffect(() => {
     if (cart.length) {
@@ -57,7 +65,7 @@ const MovieItem = ({
   };
 
   const onClickEditPrice = () => {
-    console.log('value.price',value.price)
+
     setIsEdit(true);
 
   };
@@ -66,9 +74,14 @@ const MovieItem = ({
     const cloneMovie = cloneDeep(movie)
     const index = movie.findIndex((item) => item.id === id);
     cloneMovie[index]?.price = Number(price);
-
     setMovie(cloneMovie);
     setIsEdit(false);
+    if(cart.length){
+      const cloneCart = cloneDeep(cart)
+      const indexEdit = cart.findIndex((item) => item.id === id);
+      cloneCart[indexEdit]?.price=Number(price);
+        setCart(cloneCart);
+    }
   };
 
   return (
@@ -87,8 +100,11 @@ const MovieItem = ({
             {value.title}
           </p>
           <div className="flex flex-row">
-            <div className="flex flex-row justify-center items-center rounded-w3 text-normal bg-green-300 text-gray-500 w-w18 h-w18 mr-2">
+            <div className="flex flex-row justify-center items-center rounded-w3 text-normal bg-green-300 text-gray-500 w-w18 px-2.5 h-w18 mr-1">
               {value.original_language}
+            </div>
+            <div className="flex flex-row justify-center items-center rounded-w3 text-normal bg-yellow-300 text-gray-500 w-w18 px-3 h-w18 mr-2">
+              {value.vote_average}
             </div>
             <span className=" text-about text-DeepGrey mb-2">
               {truncate(value.overview, {

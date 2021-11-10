@@ -2,9 +2,9 @@ import { useRecoilState } from "recoil";
 import cartRecoil from "../store/cart";
 
 const Header = () => {
-  const [cart, SetCart] = useRecoilState(cartRecoil);
+  const [cart, setCart] = useRecoilState(cartRecoil);
   const onClickClearCart = () => {
-    SetCart([]);
+    setCart([]);
   };
 
   return (

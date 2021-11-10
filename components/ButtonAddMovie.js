@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import mock from "../constant/mock";
 import Cross from "../public/icons/cross.svg";
-import cartRecoil from "../store/cart";
 
 const ButtonAddMovie = ({
   isAdded,
@@ -11,8 +10,6 @@ const ButtonAddMovie = ({
   onClickAdd,
   onClickUnAdd,
 }) => {
-  const [cart, SetCart] = useRecoilState(cartRecoil);
-
   return (
     <button
       className={`flex flex-row justify-center items-center rounded-timer cursor-pointer ${
