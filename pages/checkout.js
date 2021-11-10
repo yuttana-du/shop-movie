@@ -11,7 +11,13 @@ import Arrow from "../public/icons/leftarrow.svg";
 import Add from "../public/icons/add.svg";
 
 const CheckOut = () => {
-  const [cart] = useRecoilState(cartRecoil);
+  const [cart, setCart] = useRecoilState(cartRecoil);
+
+  useEffect(() => {
+    const getData = JSON.parse(localStorage.getItem("myData"));
+
+    setCart(getData);
+  }, []);
 
   const handleClickIndex = () => {
     Router.push({ pathname: "/" });
