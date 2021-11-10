@@ -4,7 +4,6 @@ import ButtonCheckOut from "./ButtonCheckOut";
 import UnderLine from "../public/icons/underline.svg";
 
 const Summary = ({ value }) => {
-  console.log("value", value);
   const [discount, setDiscount] = useState(0);
   const [total, setTotal] = useState(0);
   let sumOrder = 0;

@@ -21,11 +21,13 @@ const MovieItem = ({
   const [isEdit, setIsEdit] = useState(false);
   const [price, setPrice] = useState("");
   const [cart, setCart] = useRecoilState(cartRecoil);
+  
   useEffect(() => {
 
     if(!cart.length) {
       setIsAdded(false)
     }
+
   }, [cart])
 
   useEffect(() => {
@@ -40,6 +42,12 @@ const MovieItem = ({
         setQuantity(1);
       }
     }
+  
+    const oldPrice = cart.map((items)=>{
+      if(items.id===value.id)setPrice(items.price)
+      return items
+    })
+    
   }, []);
 
   const onAddQuantity = () => {
@@ -136,7 +144,7 @@ const MovieItem = ({
           onClick={
             isEdit ? () => onClickSavePrice(value.id) : () => onClickEditPrice()
           }
-          className="border-solid rounded-md bg-gray-500 box-border px-2 text-white mr-2 h-w38"
+          className={`border-solid rounded-md bg-${isEdit ? "gray-500": price>0 ? "green-300":"yellow-500"} bg-${price>0 ? "green-300":""} box-border px-2 text-white mr-2 h-w38`}
         >
           {isEdit ? "Enter Edit " : "Price Edit"}
         </button>

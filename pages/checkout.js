@@ -44,7 +44,7 @@ const CheckOut = () => {
         </div>
         <div>
           <Order value={cart} />
-          <Summary cart={cart} />
+          <Summary value={cart} />
         </div>
       </div>
     </div>

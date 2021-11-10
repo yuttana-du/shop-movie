@@ -15,13 +15,23 @@ const Home = () => {
   const [movie, setMovie] = useRecoilState(movieRecoil);
 
   useEffect(() => {
+    const getData = JSON.parse(localStorage.getItem("myData"));
+
+    setCart(getData);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("myData", JSON.stringify(cart));
+  }, [cart]);
+
+  useEffect(() => {
     (async () => {
       const res = await axios.get(
         "https://api.themoviedb.org/3/search/movie?api_key=a8a8e3cd72fe3c55fa0e2557ef7ad1cf&query=a"
       );
-      console.log("res", res);
+
       const addPrice = res.data.results.map((items) => {
-        return { ...items, price: 0 };
+        return { ...items, price: cart.id === items.id ? cart.price : 0 };
       });
       setMovie(addPrice);
     })();
