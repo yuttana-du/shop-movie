@@ -3,16 +3,15 @@ import Timer from "./Timer";
 const Header = ({ second, minute }) => {
   return (
     <div className="flex flex-row justify-between align-text-top mt-10 mb-w10 ">
-      <div className="flex flex-col  tracking-A8">
+      <div className="flex flex-col  tracking-A8 w-9/12">
         <h4 className="mb-2 font-header text-BlackTortoise text-header font-bold leading-A18 ">
-          Express Items
+          Search Movie
         </h4>
-        {/* ไม่มีฟอนต์ของheader  ด้านล่างความสูงยังไม่30px*/}
-        <div className="font-body text-about text-DeepGrey leading-A15 min-w-212">
-          Order up to 8 of these items from{" "}
-          <u className="text-RedVermilionBird font-semibold">Katsuei</u> and
-          receive your order by{" "}
-          <span className="text-BlackTortoise font-semibold">10:00pm</span>
+        <div className="w-full flex flex flex-row">
+          <input className="bg-white border-2 border-solid rounded-timer border-RedVermilionBird box-border w-full mr-2" />
+          <button className="border-solid rounded-md bg-RedVermilionBird box-border px-4 text-white">
+            Search
+          </button>
         </div>
       </div>
       <Timer minute={minute} second={second} />
