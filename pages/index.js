@@ -72,7 +72,7 @@ const Home = () => {
         onDropCart={onDropCart}
       />
 
-      <ButtonCart cart={cart} isOpen={cart.length} />
+      <ButtonCart cart={cart} isOpen={cart.length? cart.length:false} />
     </div>
   );
 };
