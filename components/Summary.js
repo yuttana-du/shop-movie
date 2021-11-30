@@ -51,7 +51,7 @@ const Summary = ({ value }) => {
         <hr className="my-w10" />
         <div className="flex flex-row justify-between items-center ">
           <div>Discount {total > 6 ? "20%" : total > 3 ? "10%" : "0%"}</div>
-          <div>${discount}</div>
+          <div>${discount.toFixed(2)}</div>
         </div>
 
         <hr className="my-w10" />
